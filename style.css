@@ -22,7 +22,8 @@ body {
   height: 100vh;
   text-align: center;
   padding: 20px;
-  color: #000000;
+  color: #fff; 
+  background: linear-gradient(to bottom, #d0e7ff, #a0d4ff);
 }
 
 #home-screen button {
@@ -47,6 +48,12 @@ body {
 #home-screen button:active {
   transform: scale(0.98);
   box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+@media(max-width: 480px) {
+  #home-screen, #start-screen {
+    color: #fff; 
+  background: linear-gradient(to bottom, #d0e7ff, #a0d4ff);
+  }
 }
 
 /* Responsividade */
