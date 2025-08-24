@@ -30,6 +30,15 @@ let initialTime = 0;
 let countdownInterval;
 let playerName = "";
 
+const homeScreen = document.getElementById("home-screen");
+const goToStartBtn = document.getElementById("go-to-start");
+
+goToStartBtn.addEventListener("click", () => {
+  homeScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+});
+
+
 // Sons (coloque dentro de public/assets)
 const flipSound = new Audio("/assets/flip.mp3");
 const matchSound = new Audio("/assets/match.mp3");
