@@ -26,7 +26,7 @@ let cards = [];
 let flippedCards = [];
 let lockBoard = false;
 let timeLeft = 0;
-let initialTime = 0;
+let initialTime = 60;
 let countdownInterval;
 let playerName = "";
 
@@ -204,13 +204,15 @@ restartBtn.addEventListener("click", () => {
   winModal.classList.add("hidden");
   loseModal.classList.add("hidden");
   rankingScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
+  gameScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+  clearInterval(countdownInterval);
   flippedCards = [];
   lockBoard = false;
-  createCards();
+  board.innerHTML = "";
   timeLeft = initialTime;
-  startTimer();
 });
+
 
 closeWinBtn.addEventListener("click", () => {
   winModal.classList.add("hidden");
