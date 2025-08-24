@@ -241,13 +241,26 @@ body {
 @media(max-width: 480px) {
   #start-screen h1 { font-size: 1.8rem; }
   #player-name { width: 90%; font-size: 13px; }
-  #difficulty button, #go-to-ranking, #restart, #back-to-start, #restart-ranking { font-size: 13px; padding: 8px 14px; min-width: 60px; }
-    #game-board {
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  #difficulty button, #go-to-ranking, #restart, #back-to-start, #restart-ranking { 
+    font-size: 13px; 
+    padding: 8px 14px; 
+    min-width: 60px; 
+  }
+
+  #game-board {
+    grid-template-columns: repeat(4, 1fr); /* força 4 cartas por linha */
     gap: 8px;
   }
-  .card { width: 100%; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
+
+  .card { 
+    width: 100%; 
+    aspect-ratio: 1; 
+    perspective: 1000px; 
+    cursor: pointer; 
+  }
+
   #ranking-list li { padding: 10px 15px; font-size: 1rem; }
   #restart-ranking { padding: 10px 20px; font-size: 1rem; }
   #game-controls { flex-direction: column; gap: 15px; margin-top: 50px; padding-bottom: 30px; }
 }
+
