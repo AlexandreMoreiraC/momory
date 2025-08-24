@@ -20,6 +20,8 @@ const closeLoseBtn = document.getElementById("close-lose");
 const rankingList = document.getElementById("ranking-list");
 const restartRankingBtn = document.getElementById("restart-ranking");
 
+const goToRankingBtn = document.getElementById("go-to-ranking");
+
 let cards = [];
 let flippedCards = [];
 let lockBoard = false;
@@ -28,13 +30,13 @@ let initialTime = 0;
 let countdownInterval;
 let playerName = "";
 
-// Sons
+// Sons (coloque dentro de public/assets)
 const flipSound = new Audio("/assets/flip.mp3");
 const matchSound = new Audio("/assets/match.mp3");
 const winSound = new Audio("/assets/win.mp3");
 const loseSound = new Audio("/assets/lose.mp3");
 
-// imagens das cartas
+// imagens das cartas (coloque dentro de public/assets)
 const images = [
   '/assets/img1.png','/assets/img2.png','/assets/img3.png','/assets/img4.png',
   '/assets/img5.png','/assets/img6.png','/assets/img7.png','/assets/img8.png'
@@ -50,6 +52,13 @@ difficultyButtons.forEach(btn => {
     gameScreen.classList.remove("hidden");
     startGame();
   });
+});
+
+// Botão "Ver Ranking" na tela inicial
+goToRankingBtn.addEventListener("click", () => {
+  startScreen.classList.add("hidden");
+  rankingScreen.classList.remove("hidden");
+  updateRankingList();
 });
 
 function startGame(){
@@ -211,3 +220,13 @@ restartRankingBtn.addEventListener("click", () => {
   rankingScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
 });
+backToStartBtn.addEventListener("click", () => {
+  gameScreen.classList.add("hidden");   // Esconde a tela do jogo
+  startScreen.classList.remove("hidden"); // Mostra a tela inicial
+  clearInterval(countdownInterval);      // Para o timer
+  flippedCards = [];
+  lockBoard = false;
+  board.innerHTML = "";                  // Limpa cartas do tabuleiro
+  timeLeft = initialTime;                // Reseta o tempo
+});
+

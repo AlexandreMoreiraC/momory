@@ -8,30 +8,32 @@
 <body>
 
   <!-- Tela Inicial -->
-  <div id="start-screen">
-    <h1>Jogo da Memória</h1>
-    <input type="text" id="player-name" placeholder="Digite seu nome">
-    <div id="difficulty">
-      <button data-time="120">Fácil</button>
-      <button data-time="90">Médio</button>
-      <button data-time="45">Difícil</button>
-    </div>
+<!-- Tela Inicial -->
+<div id="start-screen">
+  <h1>Jogo da Memória</h1>
+  <input type="text" id="player-name" placeholder="Digite seu nome">
+  <div id="difficulty">
+    <button data-time="120">Fácil</button>
+    <button data-time="90">Médio</button>
+    <button data-time="5">Difícil</button>
   </div>
-
-  <!-- Tela do Jogo -->
-<div id="game-screen" class="hidden">
-  <div id="info">
-    <div id="timer">Tempo: 60s</div>
-  </div>
-
-  <div id="game-board"></div>
-
-  <div id="game-controls">
-    <button id="restart">Reiniciar</button>
-    <button id="back-to-start">Voltar ao Início</button>
-  </div>
+  <button id="go-to-ranking">Ver Ranking</button>
 </div>
 
+
+  <!-- Tela do Jogo -->
+  <div id="game-screen" class="hidden">
+    <div id="info">
+      <div id="timer">Tempo: 60s</div>
+    </div>
+
+    <div id="game-board"></div>
+
+    <div id="game-controls">
+      <button id="restart">Reiniciar</button>
+      <button id="back-to-start">Voltar ao Início</button>
+    </div>
+  </div>
 
   <!-- Modal de Vitória -->
   <div id="win-modal" class="hidden">
@@ -56,6 +58,7 @@
     <button id="restart-ranking">Voltar ao início</button>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Script deve vir aqui, no final do body -->
+<script type="module" src="/src/script.js"></script>
 </body>
 </html>
