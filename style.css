@@ -121,17 +121,18 @@ body {
 #game-board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
 }
 
 .card {
   width: 100%;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1;
   perspective: 1000px;
   cursor: pointer;
+  max-width: 120px;
 }
 
 .card-inner {
@@ -234,14 +235,14 @@ body {
   #player-name { width: 250px; font-size: 14px; }
   #difficulty button, #go-to-ranking, #restart, #back-to-start, #restart-ranking { font-size: 14px; padding: 10px 16px; }
   #timer { font-size: 1rem; }
-  #game-board { max-width: 400px; gap: 12px; }
+  #game-board { max-width: none; gap: 12px; grid-template-columns: repeat(4, 1fr); }
 }
 
 @media(max-width: 480px) {
   #start-screen h1 { font-size: 1.8rem; }
   #player-name { width: 90%; font-size: 13px; }
   #difficulty button, #go-to-ranking, #restart, #back-to-start, #restart-ranking { font-size: 13px; padding: 8px 14px; min-width: 60px; }
-  #game-board { grid-template-columns: repeat(2, 1fr); max-width: 100%; gap: 10px; }
+  #game-board { grid-template-columns: repeat(4, 1fr); max-width: 100%; gap: 10px; }
   .card { max-width: 120px; }
   #ranking-list li { padding: 10px 15px; font-size: 1rem; }
   #restart-ranking { padding: 10px 20px; font-size: 1rem; }
