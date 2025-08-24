@@ -120,11 +120,11 @@ body {
 /* Tabuleiro */
 #game-board {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   justify-content: center;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
 }
 
 .card {
@@ -242,8 +242,11 @@ body {
   #start-screen h1 { font-size: 1.8rem; }
   #player-name { width: 90%; font-size: 13px; }
   #difficulty button, #go-to-ranking, #restart, #back-to-start, #restart-ranking { font-size: 13px; padding: 8px 14px; min-width: 60px; }
-  #game-board { grid-template-columns: repeat(4, 1fr); width: 100%; gap: 10px; }
-  .card { width: 100%; aspect-ratio: 1; max-width: none; }
+    #game-board {
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 8px;
+  }
+  .card { width: 100%; aspect-ratio: 1; perspective: 1000px; cursor: pointer; }
   #ranking-list li { padding: 10px 15px; font-size: 1rem; }
   #restart-ranking { padding: 10px 20px; font-size: 1rem; }
   #game-controls { flex-direction: column; gap: 15px; margin-top: 50px; padding-bottom: 30px; }
