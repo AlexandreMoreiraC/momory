@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #d0e7ff, #a0d4ff);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Telas */
+#start-screen, #game-screen, #ranking-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Tela Inicial */
+#start-screen h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-align: center;
+}
+
+#start-screen input {
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+}
+
+#difficulty button {
+  margin: 5px;
+  padding: 12px 25px;
+  background: #1E90FF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  min-width: 80px;
+  transition: 0.2s;
+}
+
+#difficulty button:hover {
+  background: #187bcd;
+}
+
+/* Jogo */
+#info {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+#timer {
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards por linha */
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Cartas */
+.card {
+  width: 100%;
+  aspect-ratio: 1/1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-front {
+  background: #1E90FF;
+}
+
+.card-back {
+  background: #fff;
+  transform: rotateY(180deg);
+}
+
+.card-back img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* Botões abaixo do tabuleiro */
+#game-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 60px;
+  padding-bottom: 20px;
+}
+
+#restart, #back-to-start {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+#restart {
+  background: #e74c3c;
+  color: white;
+}
+
+#restart:hover {
+  background: #c0392b;
+}
+
+#back-to-start {
+  background: #1E90FF;
+  color: white;
+}
+
+#back-to-start:hover {
+  background: #187bcd;
+}
+
+/* Modais */
+#win-modal, #lose-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+#win-content, #lose-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  max-width: 90%;
+}
+
+#win-content h2 { color: #4CAF50; }
+#lose-content h2 { color: #e74c3c; }
+
+#win-content button, #lose-content button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.2s;
+}
+
+#win-content button { background: #4CAF50; color: white; }
+#win-content button:hover { background: #3e8e41; }
+
+#lose-content button { background: #e74c3c; color: white; }
+#lose-content button:hover { background: #c0392b; }
+
+/* Ranking */
+#ranking-screen {
+  background: linear-gradient(to bottom, #f0f8ff, #cce7ff);
+}
+
+#ranking-screen h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #1a73e8;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+#ranking-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+#ranking-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+}
+
+#ranking-list li:first-child { background: gold; font-weight: bold; }
+#ranking-list li:nth-child(2) { background: silver; font-weight: bold; }
+#ranking-list li:nth-child(3) { background: #cd7f32; color: #fff; font-weight: bold; }
+
+#restart-ranking {
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #1a73e8;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#restart-ranking:hover { background-color: #155bb5; }
+
+/* Confete */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  top: -10px;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.8;
+  border-radius: 50%;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* Responsivo */
+@media(max-width: 500px){
+  #game-board { grid-template-columns: repeat(4, 1fr); } /* 4 cards por linha no celular */
+  .card { width: 100%; aspect-ratio: 1/1; max-width: 80px; }
+  #start-screen input { width: 90%; }
+  #difficulty button { padding: 8px 15px; font-size: 0.9rem; min-width: 60px; }
+  #ranking-screen h1 { font-size: 1.8rem; }
+  #ranking-list li { padding: 10px 15px; font-size: 1rem; }
+  #restart-ranking { padding: 10px 20px; font-size: 1rem; }
+  #game-controls { flex-direction: column; gap: 15px; margin-top: 50px; padding-bottom: 30px; }
+  #timer { font-size: 1rem; text-align: center; margin-bottom: 15px; }
+}
