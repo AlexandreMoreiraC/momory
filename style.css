@@ -9,6 +9,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   background-image: url('/assets/background.jpg');
   background-size: cover;
   background-position: center;
@@ -35,7 +36,6 @@ body {
   gap: 20px;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: none;
 }
 
 .hidden { display: none !important; }
@@ -71,6 +71,15 @@ body {
 /* -------------------------------
    START SCREEN
 ---------------------------------*/
+#start-screen {
+  background-color: rgba(43, 43, 61, 0.8);
+  border-radius: 15px;
+  gap: 20px;
+  max-width: 550px;
+  box-shadow: none;
+  margin: 0 auto; 
+}
+
 #start-screen h1 {
   font-size: 2rem;
   color: #ffd700;
@@ -78,7 +87,6 @@ body {
 
 #player-name, #idade, #tema {
   width: 100%;
-  max-width: 300px;
   font-size: 1rem;
   padding: 10px 15px;
   border-radius: 10px;
@@ -119,29 +127,9 @@ body {
 #difficulty button:nth-child(1) { background-color: #d8d502; }
 #difficulty button:nth-child(2) { background-color: #1e90ff; }
 #difficulty button:nth-child(3) { background-color: #02d898; }
+
 #difficulty button:hover { transform: scale(1.05); }
 
-/* Botão Ver Ranking */
-#go-to-ranking {
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #fff;
-  background: linear-gradient(45deg, #ff1a1a, #ff6f61);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(255,0,0,0.4);
-  transition: all 0.3s ease;
-  margin-top: 15px;
-}
-
-#go-to-ranking:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(255,0,0,0.6);
-}
-
-/* Botão voltar */
 #back-to-start {
   background: linear-gradient(45deg, #6effa6, #00ffcc, #1aff99);
   color: #000;
@@ -164,17 +152,13 @@ body {
 /* -------------------------------
    GAME SCREEN
 ---------------------------------*/
+/* Grid de cartas responsivo */
 #game-board {
   display: grid;
-  gap: 12px;
-  justify-content: center;
+  gap: 8px;
   width: 100%;
-  max-width: 500px;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-#game-board.many-cards {
-  grid-template-columns: repeat(5, 1fr);
+  max-width: 600px;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
 }
 
 .card {
@@ -208,7 +192,7 @@ body {
   border-radius: 12px;
 }
 
-/* Neon cards */
+/* Frente da carta - Neon explosivo */
 .card-front {
   background: linear-gradient(135deg, #ff0040, #ff7f50, #ff1a75);
   border: 3px solid #ff00ff;
@@ -223,6 +207,7 @@ body {
   box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff1493, 0 0 60px #ff69b4;
 }
 
+/* Verso da carta - Neon gelado */
 .card-back {
   background: linear-gradient(135deg, #00ffff, #1e90ff, #00bfff);
   border: 3px solid #00ffff;
@@ -236,8 +221,6 @@ body {
   transform: scale(1.05) rotateY(180deg);
   box-shadow: 0 0 20px #00ffff, 0 0 40px #1e90ff, 0 0 60px #00bfff;
 }
-
-.card-back img { width: 80%; height: 80%; object-fit: contain; }
 
 /* -------------------------------
    MODAIS
@@ -260,7 +243,6 @@ body {
   padding: 30px 40px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
   max-width: 90%;
 }
 
@@ -275,7 +257,6 @@ body {
   border-radius: 10px;
   cursor: pointer;
   color: #fff;
-  transition: all 0.3s ease;
 }
 
 #close-win { background-color: #39ff14; }
@@ -286,35 +267,11 @@ body {
    RANKING SCREEN
 ---------------------------------*/
 #ranking-screen {
-  background-color: rgba(43, 43, 61, 0.8);
+  background-color: rgba(43, 43, 61, 0.8); 
   color: #fff;
 }
 
-#ranking-screen h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #14b5ff;
-}
-
-#ranking-list {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-  max-width: 400px;
-}
-
-#ranking-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 15px;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  background-color: #2b2b3d;
-  font-size: 1rem;
-  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
-}
-
-#restart-ranking {
+#go-to-ranking {
   padding: 12px 30px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -328,16 +285,21 @@ body {
   margin-top: 15px;
 }
 
+#go-to-ranking:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,0,0,0.6);
+}
+
 /* ===============================
    RESPONSIVO
 ================================= */
 @media(max-width: 768px) {
   #start-screen h1 { font-size: 2rem; }
-  #player-name, #idade, #tema { width: 90%; font-size: 14px; }
+  #player-name, #idade, #tema { width: 250px; font-size: 14px; }
   #difficulty button, #back-to-start { font-size: 14px; padding: 10px 16px; }
   #game-board { gap: 10px; }
   .card { font-size: 1.5rem; }
-  #ranking-list li { font-size: 0.95rem; padding: 10px 12px; }
+  #ranking-list li { font-size: 1rem; padding: 10px 12px; }
 }
 
 @media(max-width: 480px) {
@@ -346,15 +308,7 @@ body {
   #difficulty button, #back-to-start { font-size: 13px; padding: 8px 14px; }
   #game-board { gap: 8px; }
   .card { font-size: 1.4rem; }
-  #ranking-list li { padding: 8px 12px; font-size: 0.9rem; }
-  #game-board.many-cards { grid-template-columns: repeat(5, 1fr); }
-}
-
-@media(max-width: 360px) {
-  #game-board.many-cards { grid-template-columns: repeat(4, 1fr); }
-  .card { font-size: 1.2rem; }
-  #go-to-ranking { font-size: 12px; padding: 6px 12px; }
-  #difficulty button, #back-to-start { font-size: 12px; padding: 6px 12px; }
-  #player-name, #idade, #tema { font-size: 12px; }
-  #start-screen { padding: 20px; gap: 15px; }
+  #ranking-list li { padding: 8px 12px; font-size: 0.95rem; }
+  /* O grid de cartas se adapta automaticamente, 5 cartas no modo 10+ */
+  #game-board { grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); }
 }
