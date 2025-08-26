@@ -22,6 +22,16 @@ const homeScreen = document.getElementById("home-screen");
 const idadeSelect = document.getElementById("idade");
 const temaSelect = document.getElementById("tema");
 
+// Sons do jogo
+const flipSound = new Audio("/assets/flip.mp3");
+const matchSound = new Audio("/assets/match.mp3");
+const winSound = new Audio("/assets/win.mp3");
+const loseSound = new Audio("/assets/lose.mp3");
+
+// Música de fundo
+const bgMusic = document.getElementById("bg-music");
+bgMusic.volume = 0.5;
+
 let cards = [];
 let flippedCards = [];
 let lockBoard = false;
@@ -30,36 +40,35 @@ let initialTime = 60;
 let countdownInterval;
 let playerName = "";
 
-// Sons
-const flipSound = new Audio("/assets/flip.mp3");
-const matchSound = new Audio("/assets/match.mp3");
-const winSound = new Audio("/assets/win.mp3");
-const loseSound = new Audio("/assets/lose.mp3");
-
-// Conteúdo educativo (emojis)
+// Conteúdos educativos
 const conteudos = {
   cores: {
     "4": ["🔴", "🔵", "🟢", "🟡"],
     "6": ["🟣", "🟠", "⚪", "⚫", "🟤", "🟥"],
-    "8": ["🌈", "🎨", "💠", "🔶", "🔷", "🟪", "🟩", "🟦"]
+    "8": ["🌈", "🎨", "💠", "🔶", "🔷", "🟪", "🟩", "🟦"],
+    "10": ["❤️", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "✨", "⭐", "🌟", "🔥", "⚡", "💥", "🌟"]
   },
   animais: {
     "4": ["🐶", "🐱", "🐭", "🐹"],
     "6": ["🐰", "🦊", "🐻", "🐼", "🦄", "🐨"],
-    "8": ["🦁", "🐯", "🐨", "🦉", "🐸", "🐵", "🐷", "🐔"]
+    "8": ["🦁", "🐯", "🐨", "🦉", "🐸", "🐵", "🐷", "🐔"],
+    "10": ["🐘", "🦒", "🐊", "🦓", "🦜", "🐳", "🦢", "🦔", "🦩", "🦚", "🐍", "🦘", "🦖", "🦕", "🦦"]
   },
   matematica: {
     "4": ["1️⃣", "2️⃣", "3️⃣", "4️⃣"],
     "6": ["5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "0️⃣"],
-    "8": ["➕", "➖", "✖️", "➗", "=", "1️⃣", "2️⃣", "3️⃣"]
+    "8": ["➕", "➖", "✖️", "➗", "=", "1️⃣", "2️⃣", "3️⃣"],
+    "10": ["➕", "➖", "✖️", "➗", "=", "√", "π", "∞", "≠", "≈", "≥", "≤", "%", "∑", "∫"]
   }
-  
 };
 
+// ---------------------
 // Navegação home -> start
+// ---------------------
 goToStartBtn.addEventListener("click", () => {
   homeScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
+  bgMusic.play();
 });
 
 // Seleção de dificuldade e início do jogo
@@ -67,6 +76,12 @@ difficultyButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     playerName = playerNameInput.value.trim() || "Jogador";
     initialTime = parseInt(btn.dataset.time);
+
+    // Se for 10+ anos (30 cartas), aumenta o tempo
+    if (parseInt(idadeSelect.value) >= 10) {
+      initialTime = 120;
+    }
+
     timeLeft = initialTime;
     startScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
@@ -110,13 +125,28 @@ function createCards() {
   flippedCards = [];
   lockBoard = false;
 
-  // Seleciona conteúdo baseado na idade e tema
   const idade = idadeSelect.value || "4";
   const tema = temaSelect.value || "cores";
-  const conteudoEscolhido = conteudos[tema][idade];
-  cards = shuffle([...conteudoEscolhido, ...conteudoEscolhido]);
+  let conteudoEscolhido = [...conteudos[tema][idade]];
 
+  // Se for idade >=10, pega 15 pares (30 cartas)
+  if(parseInt(idade) >= 10){
+    // Garantir 15 pares
+    while(conteudoEscolhido.length < 15) {
+      conteudoEscolhido = conteudoEscolhido.concat(conteudoEscolhido);
+    }
+    conteudoEscolhido = conteudoEscolhido.slice(0, 15);
+  }
+
+  cards = shuffle([...conteudoEscolhido, ...conteudoEscolhido]);
   board.innerHTML = "";
+
+  // Adicionar classe especial se for 10+ para 5 cartas por linha
+  if(parseInt(idade) >= 10){
+    board.classList.add("many-cards");
+  } else {
+    board.classList.remove("many-cards");
+  }
 
   cards.forEach(value => {
     const card = document.createElement("div");
