@@ -9,22 +9,43 @@
 <body>
 
   <div id="home-screen">
-  <h1>🎮 Jogo da Memória</h1>
-  <p>Memorize, vença e sinta a emoção de se superar a cada partida!</p>
-  <button id="go-to-start">Começar</button>
-</div>
-<!-- Tela Inicial -->
-<div id="start-screen" class="hidden">
-  <h1>Digite seu nome</h1>
-  <input type="text" id="player-name" placeholder="Digite seu nome">
-  <div id="difficulty">
-    <button data-time="120">Fácil</button>
-    <button data-time="90">Médio</button>
-    <button data-time="45">Difícil</button>
+    <h1>🎮 Jogo da Memória</h1>
+    <p>Memorize, vença e sinta a emoção de se superar a cada partida!</p>
+    <button id="go-to-start">Começar</button>
   </div>
-  <button id="go-to-ranking">Ver Ranking</button>
-</div>
 
+  <!-- Tela Inicial -->
+  <div id="start-screen" class="hidden">
+    <h1>Digite seu nome</h1>
+    <label for="idade">Digite seu nome:</label>
+    <input type="text" id="player-name" placeholder="Digite seu nome">
+
+    <!-- NOVO: seleção de idade e tema -->
+       <div id="education-options">
+      <label for="idade">Idade:</label>
+      <select id="idade">
+        <option value="4">4-5 anos</option>
+        <option value="6">6-7 anos</option>
+        <option value="8">8-10 anos</option>
+      </select>
+      <br>
+
+      <label for="tema">Categoria:</label>
+      <select id="tema">
+        <option value="cores">Cores</option>
+        <option value="animais">Animais</option>
+        <option value="matematica">Matemática</option>
+      </select>
+    </div>
+
+    <div id="difficulty">
+      <button data-time="120">Fácil</button>
+      <button data-time="90">Médio</button>
+      <button data-time="45">Difícil</button>
+    </div>
+
+    <button id="go-to-ranking">Ver Ranking</button>
+  </div>
 
   <!-- Tela do Jogo -->
   <div id="game-screen" class="hidden">
@@ -35,7 +56,6 @@
     <div id="game-board"></div>
 
     <div id="game-controls">
-      <button id="restart">Reiniciar</button>
       <button id="back-to-start">Voltar ao Início</button>
     </div>
   </div>
@@ -63,7 +83,7 @@
     <button id="restart-ranking">Voltar ao início</button>
   </div>
 
-  <!-- Script deve vir aqui, no final do body -->
-<script type="module" src="/src/script.js"></script>
+  <!-- Script -->
+  <script type="module" src="/src/script.js"></script>
 </body>
 </html>

@@ -6,21 +6,21 @@ const difficultyButtons = document.querySelectorAll("#difficulty button");
 const timerEl = document.getElementById("timer");
 const board = document.getElementById("game-board");
 
-const restartBtn = document.getElementById("restart");
 const backToStartBtn = document.getElementById("back-to-start");
-
 const winModal = document.getElementById("win-modal");
 const winMessage = document.getElementById("win-message");
 const closeWinBtn = document.getElementById("close-win");
-
 const loseModal = document.getElementById("lose-modal");
 const loseMessage = document.getElementById("lose-message");
 const closeLoseBtn = document.getElementById("close-lose");
-
 const rankingList = document.getElementById("ranking-list");
 const restartRankingBtn = document.getElementById("restart-ranking");
-
 const goToRankingBtn = document.getElementById("go-to-ranking");
+const goToStartBtn = document.getElementById("go-to-start");
+const homeScreen = document.getElementById("home-screen");
+
+const idadeSelect = document.getElementById("idade");
+const temaSelect = document.getElementById("tema");
 
 let cards = [];
 let flippedCards = [];
@@ -30,28 +30,39 @@ let initialTime = 60;
 let countdownInterval;
 let playerName = "";
 
-const homeScreen = document.getElementById("home-screen");
-const goToStartBtn = document.getElementById("go-to-start");
-
-goToStartBtn.addEventListener("click", () => {
-  homeScreen.classList.add("hidden");
-  startScreen.classList.remove("hidden");
-});
-
-
-// Sons (coloque dentro de public/assets)
+// Sons
 const flipSound = new Audio("/assets/flip.mp3");
 const matchSound = new Audio("/assets/match.mp3");
 const winSound = new Audio("/assets/win.mp3");
 const loseSound = new Audio("/assets/lose.mp3");
 
-// imagens das cartas (coloque dentro de public/assets)
-const images = [
-  '/assets/img1.png','/assets/img2.png','/assets/img3.png','/assets/img4.png',
-  '/assets/img5.png','/assets/img6.png','/assets/img7.png','/assets/img8.png'
-];
+// Conteúdo educativo (emojis)
+const conteudos = {
+  cores: {
+    "4": ["🔴", "🔵", "🟢", "🟡"],
+    "6": ["🟣", "🟠", "⚪", "⚫", "🟤", "🟥"],
+    "8": ["🌈", "🎨", "💠", "🔶", "🔷", "🟪", "🟩", "🟦"]
+  },
+  animais: {
+    "4": ["🐶", "🐱", "🐭", "🐹"],
+    "6": ["🐰", "🦊", "🐻", "🐼", "🦄", "🐨"],
+    "8": ["🦁", "🐯", "🐨", "🦉", "🐸", "🐵", "🐷", "🐔"]
+  },
+  matematica: {
+    "4": ["1️⃣", "2️⃣", "3️⃣", "4️⃣"],
+    "6": ["5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "0️⃣"],
+    "8": ["➕", "➖", "✖️", "➗", "=", "1️⃣", "2️⃣", "3️⃣"]
+  }
+  
+};
 
-// Escolher nome e dificuldade
+// Navegação home -> start
+goToStartBtn.addEventListener("click", () => {
+  homeScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+});
+
+// Seleção de dificuldade e início do jogo
 difficultyButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     playerName = playerNameInput.value.trim() || "Jogador";
@@ -63,7 +74,7 @@ difficultyButtons.forEach(btn => {
   });
 });
 
-// Botão "Ver Ranking" na tela inicial
+// Ver ranking
 goToRankingBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
   rankingScreen.classList.remove("hidden");
@@ -81,7 +92,7 @@ function startTimer() {
   countdownInterval = setInterval(() => {
     timeLeft--;
     timerEl.textContent = `Tempo: ${timeLeft}s`;
-    if(timeLeft <=0){
+    if(timeLeft <= 0){
       clearInterval(countdownInterval);
       loseSound.play();
       showLoseModal();
@@ -96,12 +107,18 @@ function shuffle(array) {
 function createCards() {
   winModal.classList.add("hidden");
   loseModal.classList.add("hidden");
-  cards = shuffle([...images, ...images]);
-  board.innerHTML = "";
   flippedCards = [];
   lockBoard = false;
 
-  cards.forEach(src => {
+  // Seleciona conteúdo baseado na idade e tema
+  const idade = idadeSelect.value || "4";
+  const tema = temaSelect.value || "cores";
+  const conteudoEscolhido = conteudos[tema][idade];
+  cards = shuffle([...conteudoEscolhido, ...conteudoEscolhido]);
+
+  board.innerHTML = "";
+
+  cards.forEach(value => {
     const card = document.createElement("div");
     card.classList.add("card");
 
@@ -113,18 +130,14 @@ function createCards() {
 
     const back = document.createElement("div");
     back.classList.add("card-back");
-
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "Carta";
-    back.appendChild(img);
+    back.textContent = value;
 
     cardInner.appendChild(front);
     cardInner.appendChild(back);
     card.appendChild(cardInner);
     board.appendChild(card);
 
-    card.addEventListener("click", () => flipCard(card, src));
+    card.addEventListener("click", () => flipCard(card, value));
   });
 }
 
@@ -159,7 +172,7 @@ function checkWin(){
     clearInterval(countdownInterval);
     winSound.play();
     saveRanking(timeLeft);
-    winMessage.textContent = `🎉 Parabéns ${playerName}! Seu tempo restante: ${timeLeft}s`;
+    winMessage.textContent = `🎉 Parabéns ${playerName}! Tempo restante: ${timeLeft}s`;
     confettiEffect();
     winModal.classList.remove("hidden");
   }
@@ -199,21 +212,7 @@ function updateRankingList(){
   });
 }
 
-// Botões
-restartBtn.addEventListener("click", () => {
-  winModal.classList.add("hidden");
-  loseModal.classList.add("hidden");
-  rankingScreen.classList.add("hidden");
-  gameScreen.classList.add("hidden");
-  startScreen.classList.remove("hidden");
-  clearInterval(countdownInterval);
-  flippedCards = [];
-  lockBoard = false;
-  board.innerHTML = "";
-  timeLeft = initialTime;
-});
-
-
+// Botões modais
 closeWinBtn.addEventListener("click", () => {
   winModal.classList.add("hidden");
   gameScreen.classList.add("hidden");
@@ -227,17 +226,23 @@ closeLoseBtn.addEventListener("click", () => {
   updateRankingList();
 });
 
+// Botões de voltar/reiniciar
+backToStartBtn.addEventListener("click", () => {
+  gameScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+  clearInterval(countdownInterval);
+  flippedCards = [];
+  lockBoard = false;
+  board.innerHTML = "";
+  timeLeft = initialTime;
+});
+
 restartRankingBtn.addEventListener("click", () => {
   rankingScreen.classList.add("hidden");
   startScreen.classList.remove("hidden");
-});
-backToStartBtn.addEventListener("click", () => {
-  gameScreen.classList.add("hidden");   // Esconde a tela do jogo
-  startScreen.classList.remove("hidden"); // Mostra a tela inicial
-  clearInterval(countdownInterval);      // Para o timer
+  clearInterval(countdownInterval);
   flippedCards = [];
   lockBoard = false;
-  board.innerHTML = "";                  // Limpa cartas do tabuleiro
-  timeLeft = initialTime;                // Reseta o tempo
+  board.innerHTML = "";
+  timeLeft = initialTime;
 });
-
