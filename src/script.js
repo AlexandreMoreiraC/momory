@@ -43,21 +43,21 @@ let playerName = "";
 // Conteúdos educativos
 const conteudos = {
   cores: {
-    "4": ["🔴", "🔵", "🟢", "🟡"],
-    "6": ["🟣", "🟠", "⚪", "⚫", "🟤", "🟥"],
-    "8": ["🌈", "🎨", "💠", "🔶", "🔷", "🟪", "🟩", "🟦"],
+    "4": ["🔴", "🔵", "🟢", "🟡", "🟣", "🟠"],
+    "6": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊"],
+    "8": ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"],
     "10": ["❤️", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "✨", "⭐", "🌟", "🔥", "⚡", "💥", "🌟"]
   },
   animais: {
-    "4": ["🐶", "🐱", "🐭", "🐹"],
-    "6": ["🐰", "🦊", "🐻", "🐼", "🦄", "🐨"],
-    "8": ["🦁", "🐯", "🐨", "🦉", "🐸", "🐵", "🐷", "🐔"],
-    "10": ["🐘", "🦒", "🐊", "🦓", "🦜", "🐳", "🦢", "🦔", "🦩", "🦚", "🐍", "🦘", "🦖", "🦕", "🦦"]
+    "4": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊"],
+    "6": ["🐻", "🐼", "🦄", "🐨", "🦁", "🐯"],
+    "8": ["🐨", "🦉", "🐸", "🐵", "🐷", "🐔", "🐘", "🦒", "🐊"],
+    "10": ["🦓", "🦜", "🐳", "🦢", "🦔", "🦩", "🦚", "🐍", "🦘", "🦖", "🦕", "🦦", "🦙", "🦛", "🦏"]
   },
   matematica: {
-    "4": ["1️⃣", "2️⃣", "3️⃣", "4️⃣"],
-    "6": ["5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "0️⃣"],
-    "8": ["➕", "➖", "✖️", "➗", "=", "1️⃣", "2️⃣", "3️⃣"],
+    "4": ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣"],
+    "6": ["7️⃣", "8️⃣", "9️⃣", "0️⃣", "➕", "➖"],
+    "8": ["✖️", "➗", "=", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣"],
     "10": ["➕", "➖", "✖️", "➗", "=", "√", "π", "∞", "≠", "≈", "≥", "≤", "%", "∑", "∫"]
   }
 };
@@ -129,20 +129,24 @@ function createCards() {
   const tema = temaSelect.value || "cores";
   let conteudoEscolhido = [...conteudos[tema][idade]];
 
-  // Se for idade >=10, pega 15 pares (30 cartas)
-  if(parseInt(idade) >= 10){
-    // Garantir 15 pares
-    while(conteudoEscolhido.length < 15) {
-      conteudoEscolhido = conteudoEscolhido.concat(conteudoEscolhido);
-    }
-    conteudoEscolhido = conteudoEscolhido.slice(0, 15);
+  // Ajusta número de pares por faixa etária
+  let pares = 0;
+  if(idade === "4") pares = 6;
+  else if(idade === "6") pares = 6; // Mantém 6 pares
+  else if(idade === "8") pares = 9;
+  else pares = 15; // 10+
+
+  // Garante pares suficientes
+  while(conteudoEscolhido.length < pares) {
+    conteudoEscolhido = conteudoEscolhido.concat(conteudoEscolhido);
   }
+  conteudoEscolhido = conteudoEscolhido.slice(0, pares);
 
   cards = shuffle([...conteudoEscolhido, ...conteudoEscolhido]);
   board.innerHTML = "";
 
   // Adicionar classe especial se for 10+ para 5 cartas por linha
-  if(parseInt(idade) >= 10){
+  if(pares === 15){
     board.classList.add("many-cards");
   } else {
     board.classList.remove("many-cards");
