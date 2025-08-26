@@ -114,9 +114,9 @@ body {
   transition: all 0.3s ease;
 }
 
-#difficulty button:nth-child(1) { background-color: #fffb00; } /* Verde neon */
+#difficulty button:nth-child(1) { background-color: #d8d502; } /* Verde neon */
 #difficulty button:nth-child(2) { background-color: #1e90ff; } /* Azul neon */
-#difficulty button:nth-child(3) { background-color: #00ffb3; } /* Rosa neon */
+#difficulty button:nth-child(3) { background-color: #02d898; } /* Rosa neon */
 #difficulty button:hover { transform: scale(1.05); }
 
 #back-to-start {
