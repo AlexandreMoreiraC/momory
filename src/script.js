@@ -59,11 +59,17 @@ const loseSound = new Audio("/assets/lose.mp3");
 const bgMusic = document.getElementById("bg-music");
 bgMusic.volume = 0.5;
 
-window.addEventListener('load', () => {
-  bgMusic.play().catch(() => {
-    console.log('Autoplay bloqueado. Usuário precisa interagir para tocar música.');
+const homeButtons = document.querySelectorAll("#home-screen button");
+
+homeButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    bgMusic.play().catch(() => {
+      console.log("Usuário precisa interagir para tocar música.");
+    });
   });
 });
+
+
 
 // ------------------------
 // Variáveis Jogo da Memória
