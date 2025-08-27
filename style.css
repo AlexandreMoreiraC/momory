@@ -9,7 +9,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   background-image: url('/assets/background.jpg');
   background-size: cover;
   background-position: center;
@@ -19,9 +18,7 @@ body {
   box-sizing: border-box;
 }
 
-/* ===============================
-   TELAS INICIAIS
-================================= */
+/* TELAS INICIAIS */
 #home-screen, #start-screen, #game-screen, #ranking-screen {
   display: flex;
   flex-direction: column;
@@ -40,9 +37,7 @@ body {
 
 .hidden { display: none !important; }
 
-/* -------------------------------
-   HOME SCREEN
----------------------------------*/
+/* HOME SCREEN */
 #home-screen h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
@@ -68,24 +63,17 @@ body {
   box-shadow: 0 12px 25px rgba(255,0,0,0.7);
 }
 
-/* -------------------------------
-   START SCREEN
----------------------------------*/
+/* START SCREEN */
 #start-screen {
   background-color: rgba(43, 43, 61, 0.8);
   border-radius: 15px;
   gap: 20px;
   max-width: 550px;
-  box-shadow: none;
   margin: 0 auto; 
 }
 
-#start-screen h1 {
-  font-size: 2rem;
-  color: #ffd700;
-}
-
-#player-name, #idade, #tema {
+#start-screen h1 { font-size: 2rem; color: #ffd700; }
+#player-name, #tema {
   width: 100%;
   font-size: 1rem;
   padding: 10px 15px;
@@ -95,15 +83,9 @@ body {
   color: #fff;
   text-align: center;
 }
+#start-screen label { font-size: 0.9rem; color: #fff; }
 
-#start-screen label {
-  font-size: 0.9rem;
-  color: #fff;
-}
-
-/* -------------------------------
-   BOTÕES DE DIFICULDADE
----------------------------------*/
+/* BOTÕES DE DIFICULDADE */
 #difficulty {
   display: flex;
   gap: 15px;
@@ -111,8 +93,7 @@ body {
   justify-content: center;
   margin-top: 20px;
 }
-
-#difficulty button, #back-to-start {
+#difficulty button, #back-to-start, #exit-game {
   padding: 12px 25px;
   font-size: 1.2rem;
   font-weight: 600;
@@ -123,42 +104,35 @@ body {
   box-shadow: 0 4px 12px rgba(255,255,255,0.2);
   transition: all 0.3s ease;
 }
-
 #difficulty button:nth-child(1) { background-color: #d8d502; }
 #difficulty button:nth-child(2) { background-color: #1e90ff; }
 #difficulty button:nth-child(3) { background-color: #02d898; }
+#difficulty button:hover, #exit-game:hover { transform: scale(1.05); }
 
-#difficulty button:hover { transform: scale(1.05); }
-
-#back-to-start {
-  background: linear-gradient(45deg, #6effa6, #00ffcc, #1aff99);
-  color: #000;
-  font-weight: 700;
-  padding: 12px 28px;
+/* BOTÃO VOLTAR AO INÍCIO */
+#restart-ranking {
+  background-color: #1a4076;
+  color: white;
   border: none;
+  padding: 12px 28px;
   border-radius: 12px;
-  box-shadow: 0 0 10px #6effa6, 0 0 20px #00ffcc, 0 0 30px #1aff99;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  margin-top: 10px;
-  text-shadow: 0 0 5px #fff;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 0 10px #00a4f6, 0 0 20px #002f5e;
+}
+#restart-ranking:hover {
+  background-color: #4b78ff;
+  transform: scale(1.05);
 }
 
-#back-to-start:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px #6effa6, 0 0 40px #00ffcc, 0 0 60px #1aff99, 0 0 80px #6effa6;
-}
-
-/* -------------------------------
-   GAME SCREEN
----------------------------------*/
-/* Grid de cartas responsivo */
+/* GAME SCREEN */
 #game-board {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  max-width: 600px;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  max-width: 900px;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .card {
@@ -192,40 +166,37 @@ body {
   border-radius: 12px;
 }
 
-/* Frente da carta - Neon explosivo */
 .card-front {
   background: linear-gradient(135deg, #ff0040, #ff7f50, #ff1a75);
   border: 3px solid #ff00ff;
   box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff1493, 0 0 40px #ff69b4;
   color: #fff;
   text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff, 0 0 20px #ff1493;
-  transition: transform 0.3s, box-shadow 0.3s;
 }
+.card-front:hover { transform: scale(1.05); }
 
-.card-front:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff1493, 0 0 60px #ff69b4;
-}
-
-/* Verso da carta - Neon gelado */
 .card-back {
   background: linear-gradient(135deg, #00ffff, #1e90ff, #00bfff);
   border: 3px solid #00ffff;
   transform: rotateY(180deg);
   color: #fff;
   text-shadow: 0 0 5px #fff, 0 0 10px #00ffff, 0 0 20px #1e90ff;
-  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card-back:hover { transform: scale(1.05) rotateY(180deg); }
+
+#game-controls {
+  margin-top: 20px;
+}
+#exit-game {
+  background: linear-gradient(45deg, #ff4d4d, #ff1a75);
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff1a75;
 }
 
-.card-back:hover {
-  transform: scale(1.05) rotateY(180deg);
-  box-shadow: 0 0 20px #00ffff, 0 0 40px #1e90ff, 0 0 60px #00bfff;
-}
-
-/* -------------------------------
-   MODAIS
----------------------------------*/
-#win-modal, #lose-modal {
+/* MODAIS */
+#win-modal, #lose-modal, #exit-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -238,17 +209,17 @@ body {
   z-index: 1000;
 }
 
-#win-content, #lose-content {
+#win-content, #lose-content, #exit-content {
   background: #2b2b3d;
   padding: 30px 40px;
   border-radius: 15px;
   text-align: center;
   max-width: 90%;
+  color: #fff;
 }
 
-#win-content h2 { color: #39ff14; }
-#lose-content h2 { color: #ff1493; }
-
+#win-content h2 { color: #00f899; }
+#lose-content h2 { color: #00f899; }
 #close-win, #close-lose {
   padding: 10px 20px;
   font-size: 1rem;
@@ -258,57 +229,112 @@ body {
   cursor: pointer;
   color: #fff;
 }
+#close-win, #close-lose { background-color: #028f73; }
 
-#close-win { background-color: #39ff14; }
-#close-lose { background-color: #ff1493; }
-#close-win:hover, #close-lose:hover { transform: scale(1.05); }
+#exit-content h2 { margin-bottom: 20px; font-size: 1.5rem; color: #fff; }
+#exit-buttons button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-weight: 600;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+#exit-yes { background: #ff4d4d; color:#fff; }
+#exit-no { background: #00cc99; color:#fff; }
+#exit-buttons button:hover { transform: scale(1.05); }
 
-/* -------------------------------
-   RANKING SCREEN
----------------------------------*/
-#ranking-screen {
-  background-color: rgba(43, 43, 61, 0.8); 
-  color: #fff;
+/* JOGO DA VELHA */
+#tic-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: rgba(43, 43, 61, 0.85);
 }
 
-#go-to-ranking {
-  padding: 12px 30px;
-  font-size: 1.2rem;
+#tic-turn {
+  font-size: 1.5rem;
   font-weight: 600;
+  color: #ffd700;
+  text-shadow: 0 0 5px #fff;
+}
+
+#tic-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px 0;
+}
+
+.tic-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #ff0040, #ff7f50, #ff1a75);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #fff;
-  background: linear-gradient(45deg, #ff1a1a, #ff6f61);
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+  user-select: none;
+}
+.tic-cell:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255,0,255,0.5); }
+
+#tic-buttons {
+  display: flex;
+  gap: 15px;
+}
+#tic-restart, #tic-exit {
+  padding: 10px 25px;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(255,0,0,0.4);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.2);
   transition: all 0.3s ease;
-  margin-top: 15px;
 }
+#tic-restart { background: linear-gradient(45deg, #1e90ff, #00bfff); }
+#tic-exit { background: linear-gradient(45deg, #ff4d4d, #ff1a75); }
+#tic-restart:hover, #tic-exit:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(0,255,255,0.5); }
 
-#go-to-ranking:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(255,0,0,0.6);
-}
-
-/* ===============================
-   RESPONSIVO
-================================= */
+/* RESPONSIVO */
+@media(max-width: 1024px) { #game-board { grid-template-columns: repeat(5, 1fr); } }
 @media(max-width: 768px) {
-  #start-screen h1 { font-size: 2rem; }
-  #player-name, #idade, #tema { width: 250px; font-size: 14px; }
-  #difficulty button, #back-to-start { font-size: 14px; padding: 10px 16px; }
-  #game-board { gap: 10px; }
-  .card { font-size: 1.5rem; }
-  #ranking-list li { font-size: 1rem; padding: 10px 12px; }
-}
-
-@media(max-width: 480px) {
+  #game-board { grid-template-columns: repeat(4, 1fr); }
   #start-screen h1 { font-size: 1.8rem; }
-  #player-name, #idade, #tema { width: 90%; font-size: 13px; }
-  #difficulty button, #back-to-start { font-size: 13px; padding: 8px 14px; }
-  #game-board { gap: 8px; }
+  #player-name, #tema { font-size: 0.9rem; width: 90%; }
+  #difficulty button, #back-to-start, #exit-game { font-size: 0.9rem; padding: 8px 12px; }
+  .card { font-size: 1.5rem; }
+  #tic-board { gap: 8px; }
+  .tic-cell { font-size: 2rem; border-radius: 10px; }
+  #tic-turn { font-size: 1.3rem; }
+  #tic-restart, #tic-exit { font-size: 0.9rem; padding: 8px 20px; }
+}
+@media(max-width: 480px) {
+  #game-board { grid-template-columns: repeat(5, 1fr); }
+  #start-screen h1 { font-size: 1.6rem; }
+  #player-name, #tema { font-size: 0.85rem; }
+  #difficulty button, #back-to-start, #exit-game { font-size: 0.85rem; padding: 6px 10px; }
   .card { font-size: 1.4rem; }
-  #ranking-list li { padding: 8px 12px; font-size: 0.95rem; }
-  /* O grid de cartas se adapta automaticamente, 5 cartas no modo 10+ */
-  #game-board { grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); }
+  #ranking-list li { font-size: 0.9rem; padding: 6px 8px; }
+  #tic-board { gap: 6px; }
+  .tic-cell { font-size: 1.8rem; border-radius: 8px; }
+  #tic-turn { font-size: 1.1rem; }
+  #tic-restart, #tic-exit { font-size: 0.85rem; padding: 6px 15px; }
 }

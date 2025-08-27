@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogo da Memória</title>
+  <title>KlooFlip</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Música de fundo (global) -->
+  <!-- Música de fundo -->
   <audio id="bg-music" autoplay loop>
     <source src="assets/start-music.mp3" type="audio/mpeg">
     Seu navegador não suporta áudio.
@@ -16,27 +16,25 @@
 
   <!-- Tela Home -->
   <div id="home-screen">
-    <h1>🎮 Jogo da Memória</h1>
-    <p>Memorize, vença e sinta a emoção de se superar a cada partida!</p>
-    <button id="go-to-start">Começar</button>
+    <h1>🎮 KlooFlip</h1>
+    <p>Escolha um jogo para se divertir!</p>
+    <button id="go-to-start">Jogo de Memória</button>
+    <button id="go-to-tic">Jogo da Velha</button>
+    <br>
+    <div>
+    <!--  <button id="go-to-ranking">Ver Ranking</button> -->
+    </div>
   </div>
+  
 
-  <!-- Tela Inicial -->
+  <!-- Tela Inicial (Configurações) -->
   <div id="start-screen" class="hidden">
-    <h1>Digite seu nome</h1>
     <label for="player-name">Digite seu nome:</label>
     <input type="text" id="player-name" placeholder="Digite seu nome">
 
+    <!-- Para Jogo de Memória: Categoria -->
     <div id="education-options">
-      <label for="idade">Idade:</label>
-      <select id="idade">
-        <option value="4">4-5 anos</option>
-        <option value="6">6-7 anos</option>
-        <option value="8">8-10 anos</option>
-        <option value="10">10+</option>
-      </select>
       <br>
-
       <label for="tema">Categoria:</label>
       <select id="tema">
         <option value="cores">Cores</option>
@@ -45,23 +43,56 @@
       </select>
     </div>
 
+    <!-- Botões de dificuldade -->
     <div id="difficulty">
-      <button data-time="120">Fácil</button>
-      <button data-time="90">Médio</button>
-      <button data-time="45">Difícil</button>
+      <button data-difficulty="facil">Fácil</button>
+      <button data-difficulty="medio">Médio</button>
+      <button data-difficulty="dificil">Difícil</button>
     </div>
 
-    <button id="go-to-ranking">Ver Ranking</button>
+    <!-- Botão voltar ao início -->
+    <button id="restart-ranking">Voltar ao Início</button>
   </div>
 
-  <!-- Tela do Jogo -->
+  <!-- Tela do Jogo da Memória -->
   <div id="game-screen" class="hidden">
     <div id="info">
       <div id="timer">Tempo: 60s</div>
     </div>
     <div id="game-board"></div>
     <div id="game-controls">
-      <button id="back-to-start">Voltar ao Início</button>
+      <button id="exit-game">Sair</button>
+    </div>
+  </div>
+
+  <!-- Tela do Jogo da Velha -->
+  <div id="tic-screen" class="hidden">
+    <h2 id="tic-turn">Sua vez: X</h2>
+    <div id="tic-board">
+      <div class="tic-cell" data-index="0"></div>
+      <div class="tic-cell" data-index="1"></div>
+      <div class="tic-cell" data-index="2"></div>
+      <div class="tic-cell" data-index="3"></div>
+      <div class="tic-cell" data-index="4"></div>
+      <div class="tic-cell" data-index="5"></div>
+      <div class="tic-cell" data-index="6"></div>
+      <div class="tic-cell" data-index="7"></div>
+      <div class="tic-cell" data-index="8"></div>
+    </div>
+    <div id="tic-buttons">
+      <button id="tic-restart">Reiniciar</button>
+      <button id="tic-exit">Sair</button>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação de Saída -->
+  <div id="exit-modal" class="hidden">
+    <div id="exit-content">
+      <h2>Tem certeza que quer sair do jogo?</h2>
+      <div id="exit-buttons">
+        <button id="exit-yes">Sim</button>
+        <button id="exit-no">Quero Continuar</button>
+      </div>
     </div>
   </div>
 
@@ -69,7 +100,7 @@
   <div id="win-modal" class="hidden">
     <div id="win-content">
       <h2 id="win-message">🎉 Parabéns!</h2>
-      <button id="close-win">Fechar</button>
+      <button id="close-win">Voltar ao Início</button>
     </div>
   </div>
 
@@ -77,7 +108,7 @@
   <div id="lose-modal" class="hidden">
     <div id="lose-content">
       <h2 id="lose-message">😢 Você perdeu!</h2>
-      <button id="close-lose">Ver Ranking</button>
+      <button id="close-lose">Voltar ao Início</button>
     </div>
   </div>
 
@@ -85,7 +116,7 @@
   <div id="ranking-screen" class="hidden">
     <h1>Ranking</h1>
     <ul id="ranking-list"></ul>
-    <button id="restart-ranking">Voltar ao início</button>
+    <button id="restart-ranking">Voltar ao Início</button>
   </div>
 
   <!-- Script -->
