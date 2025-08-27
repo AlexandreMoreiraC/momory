@@ -46,6 +46,7 @@ let ticBoardState = ["","","","","","","","",""];
 let ticGameOver = false;
 let ticDifficulty = "facil"; // fácil, medio, dificil
 
+
 // ------------------------
 // Sons do jogo
 // ------------------------
@@ -57,6 +58,12 @@ const loseSound = new Audio("/assets/lose.mp3");
 // Música de fundo
 const bgMusic = document.getElementById("bg-music");
 bgMusic.volume = 0.5;
+
+window.addEventListener('load', () => {
+  bgMusic.play().catch(() => {
+    console.log('Autoplay bloqueado. Usuário precisa interagir para tocar música.');
+  });
+});
 
 // ------------------------
 // Variáveis Jogo da Memória
