@@ -31,6 +31,7 @@ const goToTicBtn = document.getElementById("go-to-tic");
 const homeScreen = document.getElementById("home-screen");
 const temaSelect = document.getElementById("tema");
 
+
 // ------------------------
 // Jogo da Velha 1 jogador
 // ------------------------
@@ -264,34 +265,49 @@ function updateRankingList(){
 // Modais e controles gerais
 // ------------------------
 closeWinBtn.addEventListener("click", () => {
-  homeScreen.classList.remove("hidden");
-  startScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden"); // MOSTRA A TELA DE DIFICULDADE
   gameScreen.classList.add("hidden");
   ticScreen.classList.add("hidden");
   rankingScreen.classList.add("hidden");
   winModal.classList.add("hidden");
+  
   ticGameOver = true;
   clearInterval(countdownInterval);
   flippedCards = [];
   lockBoard = false;
   board.innerHTML = "";
   timeLeft = initialTime;
+
+  // Mostrar categoria apenas se for memória
+  if(currentGame === "memory") {
+    document.getElementById("education-options").style.display = "block";
+  } else {
+    document.getElementById("education-options").style.display = "none";
+  }
 });
 
 closeLoseBtn.addEventListener("click", () => {
-  homeScreen.classList.remove("hidden");
-  startScreen.classList.add("hidden");
+  startScreen.classList.remove("hidden"); // MOSTRA A TELA DE DIFICULDADE
   gameScreen.classList.add("hidden");
   ticScreen.classList.add("hidden");
   rankingScreen.classList.add("hidden");
   loseModal.classList.add("hidden");
+  
   ticGameOver = true;
   clearInterval(countdownInterval);
   flippedCards = [];
   lockBoard = false;
   board.innerHTML = "";
   timeLeft = initialTime;
+
+  // Mostrar categoria apenas se for memória
+  if(currentGame === "memory") {
+    document.getElementById("education-options").style.display = "block";
+  } else {
+    document.getElementById("education-options").style.display = "none";
+  }
 });
+
 
 exitGameBtn.addEventListener("click", () => { exitModal.classList.remove("hidden"); });
 exitYesBtn.addEventListener("click", () => {
@@ -356,11 +372,14 @@ function computerMove(){
   let choice;
 
   if(ticDifficulty === "facil"){
-    let emptyIndexes = ticBoardState.map((v,i)=> v===""?i:null).filter(v=>v!==null);
+    // Fácil: aleatório simples
+    const emptyIndexes = ticBoardState.map((v,i)=> v===""?i:null).filter(v=>v!==null);
     choice = emptyIndexes[Math.floor(Math.random()*emptyIndexes.length)];
   } else if(ticDifficulty === "medio"){
+    // Médio: inteligência básica
     choice = mediumMove();
   } else if(ticDifficulty === "dificil"){
+    // Difícil: MiniMax com chance de erro
     choice = minimaxMove();
   }
 
@@ -410,17 +429,24 @@ function checkTicWin() {
 // ------------------------
 function mediumMove(){
   const empty = ticBoardState.map((v,i)=> v===""?i:null).filter(v=>v!==null);
+
+  // Bloqueia o jogador ou tenta ganhar
   for(let combo of [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]){
     let [a,b,c] = combo;
-    let line = [ticBoardState[a],ticBoardState[b],ticBoardState[c]];
+    const line = [ticBoardState[a],ticBoardState[b],ticBoardState[c]];
+
+    // Tenta ganhar
     if(line.filter(x=>"O"===x).length===2 && line.includes("")) return combo[line.indexOf("")];
+    // Bloqueia jogador
     if(line.filter(x=>"X"===x).length===2 && line.includes("")) return combo[line.indexOf("")];
   }
+
+  // Senão, aleatório
   return empty[Math.floor(Math.random()*empty.length)];
 }
 
 // ------------------------
-// MiniMax (Difícil)
+// MiniMax (Difícil) Ajustado
 // ------------------------
 function minimaxMove(){
   function minimax(board, player){
@@ -432,19 +458,28 @@ function minimaxMove(){
 
     let moves = [];
     for(let i of empty){
-      let newBoard = [...board];
+      const newBoard = [...board];
       newBoard[i] = player;
-      let result = minimax(newBoard, player==="O"?"X":"O");
+      const result = minimax(newBoard, player==="O"?"X":"O");
       moves.push({index:i, score: result.score});
     }
 
     if(player==="O"){
-      let max = moves.reduce((prev,curr)=> curr.score>prev.score?curr:prev);
-      return max;
+      const maxScore = Math.max(...moves.map(m => m.score));
+      const bestMoves = moves.filter(m => m.score === maxScore);
+      return bestMoves[Math.floor(Math.random() * bestMoves.length)];
     } else {
-      let min = moves.reduce((prev,curr)=> curr.score<prev.score?curr:prev);
-      return min;
+      const minScore = Math.min(...moves.map(m => m.score));
+      const bestMoves = moves.filter(m => m.score === minScore);
+      return bestMoves[Math.floor(Math.random() * bestMoves.length)];
     }
+  }
+
+  const empty = ticBoardState.map((v,i)=> v===""?i:null).filter(v=>v!==null);
+
+  // 20% de chance de erro proposital (permite ganhar)
+  if(Math.random() < 0.2){
+    return empty[Math.floor(Math.random() * empty.length)];
   }
 
   return minimax(ticBoardState,"O").index;
