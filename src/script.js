@@ -31,6 +31,12 @@ const goToTicBtn = document.getElementById("go-to-tic");
 const homeScreen = document.getElementById("home-screen");
 const temaSelect = document.getElementById("tema");
 
+const goToTetrisBtn = document.getElementById("go-to-tetris");
+
+goToTetrisBtn.addEventListener("click", startTetris);
+goToTetrisBtn.addEventListener("touchstart", startTetris);
+
+
 // ------------------------
 // TETRIS
 // ------------------------
