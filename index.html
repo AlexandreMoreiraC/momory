@@ -22,12 +22,11 @@
     <p>Escolha um jogo para se divertir!</p>
     <button id="go-to-start">Jogo de Memória</button>
     <button id="go-to-tic">Jogo da Velha</button>
-
-
     <br>
     <div>
     <!--  <button id="go-to-ranking">Ver Ranking</button> -->
     </div>
+    
   </div>
   
 
@@ -41,7 +40,9 @@
       <br>
       <label for="tema">Categoria:</label>
       <select id="tema">
+        <option value="cores">Cores</option>
         <option value="animais">Animais</option>
+        <option value="matematica">Matemática</option>
       </select>
     </div>
 
@@ -63,7 +64,7 @@
     </div>
     <div id="game-board"></div>
     <div id="game-controls">
-    <button id="exit-game">Sair</button>
+      <button id="exit-game">Sair</button>
     </div>
   </div>
 
@@ -114,7 +115,6 @@
       </div>
     </div>
 
-
   <!-- Tela de Ranking -->
   <div id="ranking-screen" class="hidden">
     <h1>Ranking</h1>
@@ -123,6 +123,6 @@
   </div>
 
   <!-- Script -->
-<script src="src/script.js"></script>
+  <script type="module" src="/src/script.js"></script>
 </body>
 </html>
