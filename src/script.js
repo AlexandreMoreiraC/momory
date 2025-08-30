@@ -180,13 +180,6 @@ function startTetris(){
   clearInterval(tetrisInterval);
   tetrisInterval = setInterval(dropPiece, 500);
 }
-const tetrisButtons = ["left-btn","right-btn","down-btn","rotate-btn"];
-tetrisButtons.forEach(id => {
-  const btn = document.getElementById(id);
-  btn.addEventListener("click", () => handleTetrisButton(id));
-  btn.addEventListener("touchstart", () => handleTetrisButton(id));
-});
-
 document.getElementById("left-btn").addEventListener("click", () => {
   if(canMove(currentRow,currentCol-1,currentPiece)) currentCol--;
   drawPiece();
@@ -225,23 +218,13 @@ exitTetrisBtn.addEventListener("click", () => {
 });
 
 
-const tetrisLoseModal = document.getElementById("tetris-lose-modal");
-const tetrisLoseMessage = document.getElementById("tetris-lose-message");
-const closeTetrisLose = document.getElementById("close-tetris-lose");
-
+// Finalizar jogo
 function endTetrisGame(){
   clearInterval(tetrisInterval);
-  tetrisLoseMessage.textContent = `😢 Game Over! Pontuação: ${tetrisScore}`;
-  tetrisLoseModal.classList.remove("hidden");
+  alert("Game Over! Pontuação: "+tetrisScore);
   tetrisScreen.classList.add("hidden");
-  playSound(loseSound);
-}
-
-closeTetrisLose.addEventListener("click", () => {
-  tetrisLoseModal.classList.add("hidden");
   homeScreen.classList.remove("hidden");
-});
-
+}
 
 // ------------------------
 // Jogo da Velha 1 jogador
