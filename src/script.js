@@ -31,6 +31,174 @@ const goToTicBtn = document.getElementById("go-to-tic");
 const homeScreen = document.getElementById("home-screen");
 const temaSelect = document.getElementById("tema");
 
+// ------------------------
+// TETRIS
+// ------------------------
+const tetrisScreen = document.getElementById("tetris-screen");
+const tetrisBoard = document.getElementById("tetris-board");
+const tetrisScoreEl = document.getElementById("tetris-score");
+
+let tetrisRows = 20;
+let tetrisCols = 10;
+let tetrisBoardMatrix = [];
+let tetrisInterval;
+let tetrisScore = 0;
+
+const tetrominoes = [
+  { shape: [[1,1,1,1]], color: "I" },             // I
+  { shape: [[1,1],[1,1]], color: "O" },           // O
+  { shape: [[0,1,0],[1,1,1]], color: "T" },       // T
+  { shape: [[1,0,0],[1,1,1]], color: "J" },       // J
+  { shape: [[0,0,1],[1,1,1]], color: "L" },       // L
+  { shape: [[1,1,0],[0,1,1]], color: "S" },       // S
+  { shape: [[0,1,1],[1,1,0]], color: "Z" }        // Z
+];
+
+let currentPiece, currentRow, currentCol;
+
+// Inicializar tabuleiro
+function initTetrisBoard(){
+  tetrisBoardMatrix = Array.from({length: tetrisRows}, () => Array(tetrisCols).fill(null));
+  drawTetrisBoard();
+}
+
+// Desenhar tabuleiro
+function drawTetrisBoard(){
+  tetrisBoard.innerHTML = "";
+  tetrisBoardMatrix.forEach(row => {
+    row.forEach(cell => {
+      const div = document.createElement("div");
+      div.classList.add("tetris-cell");
+      if(cell) div.classList.add(`filled-${cell}`);
+      tetrisBoard.appendChild(div);
+    });
+  });
+}
+
+// Nova peça
+function spawnPiece(){
+  const t = tetrominoes[Math.floor(Math.random()*tetrominoes.length)];
+  currentPiece = t.shape;
+  currentPiece.color = t.color;
+  currentRow = 0;
+  currentCol = Math.floor(tetrisCols/2) - Math.floor(currentPiece[0].length/2);
+
+  if(!canMove(currentRow,currentCol,currentPiece)){
+    endTetrisGame();
+  }
+}
+
+// Checar movimento
+function canMove(row, col, piece){
+  return piece.every((r,i) =>
+    r.every((c,j)=>{
+      if(!c) return true;
+      const newRow = row + i;
+      const newCol = col + j;
+      return newRow>=0 && newRow<tetrisRows && newCol>=0 && newCol<tetrisCols && !tetrisBoardMatrix[newRow][newCol];
+    })
+  );
+}
+
+// Fixar peça
+function placePiece(){
+  currentPiece.forEach((r,i)=>{
+    r.forEach((c,j)=>{
+      if(c) tetrisBoardMatrix[currentRow+i][currentCol+j] = currentPiece.color;
+    });
+  });
+  clearLines();
+  spawnPiece();
+}
+
+// Limpar linhas
+function clearLines(){
+  let newBoard = tetrisBoardMatrix.filter(row => row.some(c=>!c));
+  let cleared = tetrisRows - newBoard.length;
+  while(newBoard.length < tetrisRows) newBoard.unshift(Array(tetrisCols).fill(null));
+  tetrisBoardMatrix = newBoard;
+  if(cleared>0){
+    tetrisScore += cleared*100;
+    tetrisScoreEl.textContent = "Pontuação: "+tetrisScore;
+  }
+}
+
+// Mover para baixo
+function dropPiece(){
+  if(canMove(currentRow+1,currentCol,currentPiece)){
+    currentRow++;
+  } else {
+    placePiece();
+  }
+  drawPiece();
+}
+
+// Desenhar peça atual
+function drawPiece(){
+  drawTetrisBoard();
+  currentPiece.forEach((r,i)=>{
+    r.forEach((c,j)=>{
+      if(c){
+        const index = (currentRow+i)*tetrisCols + (currentCol+j);
+        tetrisBoard.children[index].classList.add(`filled-${currentPiece.color}`);
+      }
+    });
+  });
+}
+
+// Rotacionar peça
+function rotatePiece(){
+  const rotated = currentPiece[0].map((_,i)=> currentPiece.map(row=>row[i]).reverse());
+  rotated.color = currentPiece.color;
+  if(canMove(currentRow,currentCol,rotated)) currentPiece = rotated;
+}
+
+// Controles
+document.addEventListener("keydown", e=>{
+  if(tetrisScreen.classList.contains("hidden")) return;
+  if(e.key==="ArrowLeft" && canMove(currentRow,currentCol-1,currentPiece)) currentCol--;
+  else if(e.key==="ArrowRight" && canMove(currentRow,currentCol+1,currentPiece)) currentCol++;
+  else if(e.key==="ArrowDown") dropPiece();
+  else if(e.key==="ArrowUp") rotatePiece();
+  drawPiece();
+});
+
+// Iniciar jogo
+function startTetris(){
+  homeScreen.classList.add("hidden");
+  startScreen.classList.add("hidden");
+  gameScreen.classList.add("hidden");
+  ticScreen.classList.add("hidden");
+  rankingScreen.classList.add("hidden");
+  tetrisScreen.classList.remove("hidden");
+
+  tetrisScore = 0;
+  tetrisScoreEl.textContent = "Pontuação: 0";
+  initTetrisBoard();
+  spawnPiece();
+  drawPiece();
+  clearInterval(tetrisInterval);
+  tetrisInterval = setInterval(dropPiece, 500);
+}
+// Botão sair do Tetris
+const exitTetrisBtn = document.getElementById("exit-tetris");
+
+exitTetrisBtn.addEventListener("click", () => {
+  clearInterval(tetrisInterval); // Para o loop do Tetris
+  tetrisBoardMatrix = []; // Reseta o tabuleiro
+  tetrisBoard.innerHTML = ""; 
+  tetrisScreen.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
+});
+
+
+// Finalizar jogo
+function endTetrisGame(){
+  clearInterval(tetrisInterval);
+  alert("Game Over! Pontuação: "+tetrisScore);
+  tetrisScreen.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
+}
 
 // ------------------------
 // Jogo da Velha 1 jogador
@@ -54,6 +222,8 @@ const flipSound = new Audio("/assets/flip.mp3");
 const matchSound = new Audio("/assets/match.mp3");
 const winSound = new Audio("/assets/win.mp3");
 const loseSound = new Audio("/assets/lose.mp3");
+
+
 
 // Música de fundo
 const bgMusic = document.getElementById("bg-music");
@@ -84,9 +254,13 @@ let playerName = "";
 
 // Conteúdos educativos
 const conteudos = {
-  cores: { "10": ["❤️","💛","💚","💙","💜","🖤","🤍","🤎","✨","⭐","🌟","🔥","⚡","💥","🌟"] },
-  animais: { "10": ["🦓","🦜","🐳","🦢","🦔","🦩","🦚","🐍","🦘","🦖","🦕","🦦","🦙","🦛","🦏"] },
-  matematica: { "10": ["➕","➖","✖️","➗","=","√","π","∞","≠","≈","≥","≤","%","∑","∫"] }
+
+  animais: {
+    "10": [
+      "🦁","🐯","🐼","🐨","🐸","🐵","🐧","🦉","🦄","🦋",
+      "🐙","🦈","🐬","🦅","🦊","🦝","🦖","🦒","🦩","🦦"
+    ]
+  }
 };
 
 // ------------------------
