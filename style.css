@@ -382,6 +382,51 @@ body {
   transform: scale(1.1);
   box-shadow: 0 0 5px #fff, 0 0 10px #fff inset;
 }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #1e293b;
+  color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: pop 0.3s ease;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+  color: #e63946;
+}
+
+.modal-content button {
+  margin: 10px 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #d4af37;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 
 /* Cores Tetrominoes */
 .tetris-cell.filled-I { background: #00f0f0; box-shadow: 0 0 5px #00f0f0 inset; }
