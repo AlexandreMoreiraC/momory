@@ -180,24 +180,56 @@ function startTetris(){
   clearInterval(tetrisInterval);
   tetrisInterval = setInterval(dropPiece, 500);
 }
+document.getElementById("left-btn").addEventListener("click", () => {
+  if(canMove(currentRow,currentCol-1,currentPiece)) currentCol--;
+  drawPiece();
+});
+
+document.getElementById("right-btn").addEventListener("click", () => {
+  if(canMove(currentRow,currentCol+1,currentPiece)) currentCol++;
+  drawPiece();
+});
+
+document.getElementById("down-btn").addEventListener("click", dropPiece);
+document.getElementById("rotate-btn").addEventListener("click", rotatePiece);
+
+// Botão sair do Tetris
 // Botão sair do Tetris
 const exitTetrisBtn = document.getElementById("exit-tetris");
 
 exitTetrisBtn.addEventListener("click", () => {
-  clearInterval(tetrisInterval); // Para o loop do Tetris
-  tetrisBoardMatrix = []; // Reseta o tabuleiro
-  tetrisBoard.innerHTML = ""; 
-  tetrisScreen.classList.add("hidden");
-  homeScreen.classList.remove("hidden");
+  // Mostra o modal de confirmação
+  exitModal.classList.remove("hidden");
+
+  // Função temporária para confirmar saída do Tetris
+  exitYesBtn.onclick = () => {
+    clearInterval(tetrisInterval); // Para o loop do Tetris
+    tetrisBoardMatrix = []; // Reseta o tabuleiro
+    tetrisBoard.innerHTML = ""; 
+    tetrisScreen.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+
+    exitModal.classList.add("hidden");
+  };
+
+  exitNoBtn.onclick = () => {
+    exitModal.classList.add("hidden");
+  };
 });
 
-
-// Finalizar jogo
 function endTetrisGame(){
   clearInterval(tetrisInterval);
-  alert("Game Over! Pontuação: "+tetrisScore);
+  loseSound.play(); // toca o som de derrota
+  loseMessage.textContent = `😢 Game Over! Pontuação: ${tetrisScore}`; // mensagem personalizada
+  loseModal.classList.remove("hidden"); // mostra modal
+  tetrisScreen.classList.add("hidden"); // esconde tela do Tetris
+}
+function winTetrisGame(){
+  clearInterval(tetrisInterval);
+  winSound.play();
+  winMessage.textContent = `🎉 Parabéns! Você venceu o Tetris! Pontuação: ${tetrisScore}`;
+  winModal.classList.remove("hidden");
   tetrisScreen.classList.add("hidden");
-  homeScreen.classList.remove("hidden");
 }
 
 // ------------------------

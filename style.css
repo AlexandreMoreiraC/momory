@@ -382,6 +382,37 @@ body {
   box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   background: linear-gradient(135deg, #ff4b2b, #ff416c);
 }
+/* Container dos botões do Tetris */
+#tetris-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+/* Botões de controle do Tetris */
+#tetris-buttons button {
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  color: #d4af37;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px #111;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#tetris-buttons button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px #111;
+}
+
+#tetris-buttons button:hover {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+}
+
 
 /* Responsivo */
 @media screen and (max-width: 500px){
