@@ -32,6 +32,7 @@ const homeScreen = document.getElementById("home-screen");
 const temaSelect = document.getElementById("tema");
 
 
+
 // ------------------------
 // Jogo da Velha 1 jogador
 // ------------------------
