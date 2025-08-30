@@ -32,7 +32,6 @@ const homeScreen = document.getElementById("home-screen");
 const temaSelect = document.getElementById("tema");
 
 
-
 // ------------------------
 // Jogo da Velha 1 jogador
 // ------------------------
@@ -55,8 +54,6 @@ const flipSound = new Audio("/assets/flip.mp3");
 const matchSound = new Audio("/assets/match.mp3");
 const winSound = new Audio("/assets/win.mp3");
 const loseSound = new Audio("/assets/lose.mp3");
-
-
 
 // Música de fundo
 const bgMusic = document.getElementById("bg-music");
@@ -87,13 +84,9 @@ let playerName = "";
 
 // Conteúdos educativos
 const conteudos = {
-
-  animais: {
-    "10": [
-      "🦁","🐯","🐼","🐨","🐸","🐵","🐧","🦉","🦄","🦋",
-      "🐙","🦈","🐬","🦅","🦊","🦝","🦖","🦒","🦩","🦦"
-    ]
-  }
+  cores: { "10": ["❤️","💛","💚","💙","💜","🖤","🤍","🤎","✨","⭐","🌟","🔥","⚡","💥","🌟"] },
+  animais: { "10": ["🦓","🦜","🐳","🦢","🦔","🦩","🦚","🐍","🦘","🦖","🦕","🦦","🦙","🦛","🦏"] },
+  matematica: { "10": ["➕","➖","✖️","➗","=","√","π","∞","≠","≈","≥","≤","%","∑","∫"] }
 };
 
 // ------------------------
