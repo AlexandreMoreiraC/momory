@@ -36,7 +36,30 @@ const goToTetrisBtn = document.getElementById("go-to-tetris");
 goToTetrisBtn.addEventListener("click", startTetris);
 goToTetrisBtn.addEventListener("touchstart", startTetris);
 
+// ------------------------
+// Sons do jogo
+// ------------------------
+const flipSound = new Audio("/assets/flip.mp3");
+const matchSound = new Audio("/assets/match.mp3");
+const winSound = new Audio("/assets/win.mp3");
+const loseSound = new Audio("/assets/lose.mp3");
 
+
+
+// Música de fundo
+const bgMusic = document.getElementById("bg-music");
+bgMusic.volume = 0.5;
+
+const homeButtons = document.querySelectorAll("#home-screen button");
+
+homeButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    bgMusic.play().catch(() => {
+      console.log("Usuário precisa interagir para tocar música.");
+    });
+  });
+});
+ 
 // ------------------------
 // TETRIS
 // ------------------------
@@ -233,6 +256,7 @@ function endTetrisGame(){
   homeScreen.classList.remove("hidden");
 }
 
+
 // ------------------------
 // Jogo da Velha 1 jogador
 // ------------------------
@@ -246,31 +270,6 @@ let ticCurrentPlayer = "X";
 let ticBoardState = ["","","","","","","","",""];
 let ticGameOver = false;
 let ticDifficulty = "facil"; // fácil, medio, dificil
-
-
-// ------------------------
-// Sons do jogo
-// ------------------------
-const flipSound = new Audio("/assets/flip.mp3");
-const matchSound = new Audio("/assets/match.mp3");
-const winSound = new Audio("/assets/win.mp3");
-const loseSound = new Audio("/assets/lose.mp3");
-
-
-
-// Música de fundo
-const bgMusic = document.getElementById("bg-music");
-bgMusic.volume = 0.5;
-
-const homeButtons = document.querySelectorAll("#home-screen button");
-
-homeButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    bgMusic.play().catch(() => {
-      console.log("Usuário precisa interagir para tocar música.");
-    });
-  });
-});
 
 
 
