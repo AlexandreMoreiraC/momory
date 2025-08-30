@@ -180,6 +180,13 @@ function startTetris(){
   clearInterval(tetrisInterval);
   tetrisInterval = setInterval(dropPiece, 500);
 }
+const tetrisButtons = ["left-btn","right-btn","down-btn","rotate-btn"];
+tetrisButtons.forEach(id => {
+  const btn = document.getElementById(id);
+  btn.addEventListener("click", () => handleTetrisButton(id));
+  btn.addEventListener("touchstart", () => handleTetrisButton(id));
+});
+
 document.getElementById("left-btn").addEventListener("click", () => {
   if(canMove(currentRow,currentCol-1,currentPiece)) currentCol--;
   drawPiece();
@@ -217,20 +224,24 @@ exitTetrisBtn.addEventListener("click", () => {
   };
 });
 
+
+const tetrisLoseModal = document.getElementById("tetris-lose-modal");
+const tetrisLoseMessage = document.getElementById("tetris-lose-message");
+const closeTetrisLose = document.getElementById("close-tetris-lose");
+
 function endTetrisGame(){
   clearInterval(tetrisInterval);
-  loseSound.play(); // toca o som de derrota
-  loseMessage.textContent = `😢 Game Over! Pontuação: ${tetrisScore}`; // mensagem personalizada
-  loseModal.classList.remove("hidden"); // mostra modal
-  tetrisScreen.classList.add("hidden"); // esconde tela do Tetris
-}
-function winTetrisGame(){
-  clearInterval(tetrisInterval);
-  winSound.play();
-  winMessage.textContent = `🎉 Parabéns! Você venceu o Tetris! Pontuação: ${tetrisScore}`;
-  winModal.classList.remove("hidden");
+  tetrisLoseMessage.textContent = `😢 Game Over! Pontuação: ${tetrisScore}`;
+  tetrisLoseModal.classList.remove("hidden");
   tetrisScreen.classList.add("hidden");
+  playSound(loseSound);
 }
+
+closeTetrisLose.addEventListener("click", () => {
+  tetrisLoseModal.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
+});
+
 
 // ------------------------
 // Jogo da Velha 1 jogador
